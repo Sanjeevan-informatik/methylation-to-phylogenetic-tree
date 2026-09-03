@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use MethylPhylo Studio, please cite this software."
+title: "MethylPhylo Studio"
+type: software
+authors:
+  - family-names: Vivekanantha
+    given-names: Sanjeevan
+version: 0.2.0
+date-released: 2026-09-03
+repository-code: "https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree"
+license: MIT

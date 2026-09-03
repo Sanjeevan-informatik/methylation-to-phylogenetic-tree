@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore DNA methylation quality, sample structure, and UPGMA phylogenies directly in your browser."
+    />
+    <meta name="theme-color" content="#07131f" />
+    <title>MethylPhylo Studio</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to analysis workspace</a>
+    <header class="topbar">
+      <div class="brand" aria-label="MethylPhylo Studio">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>
+          <strong>MethylPhylo</strong>
+          <small>Studio</small>
+        </span>
+      </div>
+      <div class="header-meta">
+        <span class="privacy-note">Runs locally in your browser</span>
+        <a href="https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree" target="_blank" rel="noreferrer">View source</a>
+      </div>
+    </header>
+
+    <main id="workspace" class="workspace">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">DNA methylation · exploratory phylogenetics</p>
+          <h1 id="page-title">From beta values to sample relationships.</h1>
+        </div>
+        <p>
+          Validate a methylation matrix, retain informative CpG loci, and compare samples with a reproducible UPGMA tree and PCA projection.
+        </p>
+      </section>
+
+      <section class="analysis-layout">
+        <aside class="control-panel" aria-labelledby="controls-title">
+          <div class="panel-heading">
+            <div>
+              <span class="step-label">01</span>
+              <h2 id="controls-title">Analysis setup</h2>
+            </div>
+            <button id="reset-button" class="text-button" type="button">Reset</button>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">Input matrix</span>
+            <div class="segmented" role="group" aria-label="Choose input matrix">
+              <button id="demo-button" class="segment active" type="button">Demo cohort</button>
+              <label class="segment file-trigger" for="file-input">Upload CSV / TSV</label>
+              <input id="file-input" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" />
+            </div>
+            <div id="file-status" class="file-status" aria-live="polite">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span><strong>Synthetic AML cohort</strong><small>8 samples · 72 CpG loci</small></span>
+            </div>
+            <p class="format-hint">First column: CpG ID. Remaining columns: samples with beta values from 0 to 1.</p>
+          </div>
+
+          <label class="control-group" for="metric-select">
+            <span class="control-label">Distance metric</span>
+            <select id="metric-select">
+              <option value="euclidean">Euclidean (RMS)</option>
+              <option value="manhattan">Manhattan</option>
+              <option value="correlation">Correlation distance</option>
+            </select>
+            <span id="metric-help" class="format-hint">Sensitive to the magnitude of methylation differences.</span>
+          </label>
+
+          <label class="control-group" for="loci-range">
+            <span class="range-heading">
+              <span class="control-label">Most variable loci</span>
+              <output id="loci-output" for="loci-range">40</output>
+            </span>
+            <input id="loci-range" type="range" min="10" max="72" value="40" step="1" />
+            <span class="range-scale"><span>10</span><span id="range-max">72</span></span>
+          </label>
+
+          <button id="run-button" class="run-button" type="button">
+            <span>Run analysis</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+        </aside>
+
+        <section class="results" aria-labelledby="results-title">
+          <div class="results-header">
+            <div>
+              <span class="step-label">02</span>
+              <h2 id="results-title">Cohort overview</h2>
+            </div>
+            <div class="export-actions">
+              <button id="newick-button" class="secondary-button" type="button">Export Newick</button>
+              <button id="report-button" class="secondary-button" type="button">Export report</button>
+            </div>
+          </div>
+
+          <div class="metrics" aria-label="Analysis summary">
+            <article><span>Samples</span><strong id="metric-samples">8</strong><small id="metric-groups">3 inferred groups</small></article>
+            <article><span>CpG loci</span><strong id="metric-loci">72</strong><small id="metric-selected">40 selected</small></article>
+            <article><span>Missing values</span><strong id="metric-missing">1.4%</strong><small>median-imputed</small></article>
+            <article><span>Tree height</span><strong id="metric-height">0.18</strong><small>UPGMA distance units</small></article>
+          </div>
+
+          <div class="tab-bar" role="tablist" aria-label="Analysis views">
+            <button class="tab active" id="tab-tree" role="tab" aria-selected="true" aria-controls="panel-tree" type="button">Phylogeny</button>
+            <button class="tab" id="tab-pca" role="tab" aria-selected="false" aria-controls="panel-pca" type="button">PCA</button>
+            <button class="tab" id="tab-heatmap" role="tab" aria-selected="false" aria-controls="panel-heatmap" type="button">Methylation map</button>
+            <button class="tab" id="tab-model" role="tab" aria-selected="false" aria-controls="panel-model" type="button">Model probability</button>
+            <button class="tab" id="tab-qc" role="tab" aria-selected="false" aria-controls="panel-qc" type="button">Quality report</button>
+          </div>
+
+          <div id="panel-tree" class="tab-panel active" role="tabpanel" aria-labelledby="tab-tree">
+            <div class="visual-card">
+              <div class="visual-heading">
+                <div><h3>UPGMA sample tree</h3><p id="tree-subtitle">Euclidean distance · 40 high-variance loci</p></div>
+                <div id="legend" class="legend" aria-label="Sample groups"></div>
+              </div>
+              <div id="tree-chart" class="chart tree-chart" aria-label="UPGMA dendrogram"></div>
+              <div class="chart-footnote"><span>0.00</span><span>Increasing dissimilarity from leaves → root</span></div>
+            </div>
+          </div>
+
+          <div id="panel-pca" class="tab-panel" role="tabpanel" aria-labelledby="tab-pca" hidden>
+            <div class="visual-card">
+              <div class="visual-heading">
+                <div><h3>Principal-component projection</h3><p id="pca-subtitle">Top components across selected CpG loci</p></div>
+              </div>
+              <div id="pca-chart" class="chart pca-chart" aria-label="PCA scatter plot"></div>
+            </div>
+          </div>
+
+          <div id="panel-heatmap" class="tab-panel" role="tabpanel" aria-labelledby="tab-heatmap" hidden>
+            <div class="visual-card">
+              <div class="visual-heading">
+                <div><h3>Variable-locus methylation map</h3><p>Top 18 CpG loci; values after median imputation</p></div>
+                <div class="beta-scale"><span>0</span><i></i><span>1 β</span></div>
+              </div>
+              <div id="heatmap-chart" class="heatmap-chart" aria-label="Methylation beta-value heatmap"></div>
+            </div>
+          </div>
+
+          <div id="panel-model" class="tab-panel" role="tabpanel" aria-labelledby="tab-model" hidden>
+            <div class="model-grid">
+              <article class="visual-card model-controls">
+                <div class="visual-heading">
+                  <div><h3>Transition probability calculator</h3><p>Continuous-time Markov models</p></div>
+                </div>
+                <div class="model-form">
+                  <label for="model-select">
+                    <span class="control-label">Evolutionary model</span>
+                    <select id="model-select">
+                      <option value="jc69">Jukes–Cantor (JC69)</option>
+                      <option value="binary">Symmetric two-state model</option>
+                    </select>
+                  </label>
+                  <label for="model-distance">
+                    <span id="model-distance-label" class="control-label">Distance d · substitutions per site</span>
+                    <input id="model-distance" class="number-input" type="number" min="0" max="20" step="0.01" value="0.10" inputmode="decimal" />
+                  </label>
+                  <p id="model-context" class="model-context">JC69 models A, C, G and T with equal frequencies and equal substitution rates.</p>
+                  <p class="model-warning">This calculator is separate from the methylation beta-value tree. Do not interpret beta-value distance directly as nucleotide substitutions per site.</p>
+                </div>
+              </article>
+
+              <article class="visual-card model-results">
+                <div class="visual-heading">
+                  <div><h3 id="model-result-title">JC69 transition probabilities</h3><p id="model-result-caption">At evolutionary distance d = 0.10</p></div>
+                </div>
+                <div class="probability-summary">
+                  <div class="probability-row"><span>Same state</span><strong id="prob-same">90.64%</strong></div>
+                  <div class="probability-track" aria-hidden="true"><i id="prob-same-bar"></i></div>
+                  <div class="probability-row"><span id="prob-change-label">Any different nucleotide</span><strong id="prob-change">9.36%</strong></div>
+                  <div class="probability-track change" aria-hidden="true"><i id="prob-change-bar"></i></div>
+                  <div id="specific-probability" class="specific-probability">
+                    <span>Each specific change (for example A → G)</span>
+                    <strong id="prob-specific">3.12%</strong>
+                  </div>
+                  <div class="formula-box">
+                    <span>Model equation</span>
+                    <code id="model-formula">P(same) = ¼ + ¾e<sup>−4d/3</sup></code>
+                  </div>
+                  <p id="probability-check" class="probability-check">Probability check: 90.64% + 9.36% = 100.00%</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div id="panel-qc" class="tab-panel" role="tabpanel" aria-labelledby="tab-qc" hidden>
+            <div class="qc-grid">
+              <article class="visual-card">
+                <div class="visual-heading"><div><h3>Validation checks</h3><p>Rules applied before analysis</p></div></div>
+                <div id="qc-checks" class="qc-checks"></div>
+              </article>
+              <article class="visual-card">
+                <div class="visual-heading"><div><h3>Pairwise distances</h3><p>Rounded analysis matrix</p></div></div>
+                <div id="distance-table" class="table-wrap"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="method-note">
+        <span class="step-label">03</span>
+        <div><h2>Transparent by design</h2><p>No data leaves the browser. The pipeline validates beta values, imputes missing loci by row median, selects loci by variance, calculates pairwise sample distances, and applies average-linkage UPGMA clustering.</p></div>
+        <a href="https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree#method" target="_blank" rel="noreferrer">Read the method →</a>
+      </section>
+    </main>
+
+    <footer><span>Built by Sanjeevan Vivekanantha</span><span>Exploratory research software · Not for clinical use</span></footer>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
