@@ -6,7 +6,7 @@
 
 MethylPhylo Studio v0.2 turns a DNA-methylation beta-value matrix into a transparent exploratory analysis: input validation, locus-level imputation, variance-based feature selection, pairwise sample distances, a rooted UPGMA tree, PCA, evolutionary-model probabilities, and reproducible exports.
 
-To explore the JC69 and two-state models, run the browser application and select **Model probability**.
+**[Open live application](https://methylphylo-studio.sanjeevanvive.chatgpt.site)** — select **Model probability** to explore the JC69 and two-state models.
 
 > This is exploratory research software, not a clinical diagnostic tool. A similarity tree based on methylation does not by itself establish cellular ancestry.
 
