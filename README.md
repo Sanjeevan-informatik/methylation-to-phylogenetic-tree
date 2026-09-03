@@ -4,11 +4,28 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-6ee7d8)](LICENSE)
 
-MethylPhylo Studio turns a DNA-methylation beta-value matrix into a transparent exploratory analysis: input validation, locus-level imputation, variance-based feature selection, pairwise sample distances, a rooted UPGMA tree, PCA, and reproducible exports.
+MethylPhylo Studio v0.2 turns a DNA-methylation beta-value matrix into a transparent exploratory analysis: input validation, locus-level imputation, variance-based feature selection, pairwise sample distances, a rooted UPGMA tree, PCA, evolutionary-model probabilities, and reproducible exports.
 
-**[Open live application](https://sanjeevan-informatik.github.io/methylation-to-phylogenetic-tree/)**
+To explore the JC69 and two-state models, run the browser application and select **Model probability**.
 
 > This is exploratory research software, not a clinical diagnostic tool. A similarity tree based on methylation does not by itself establish cellular ancestry.
+
+## Version 0.2 highlights
+
+- **Jukes–Cantor (JC69)** nucleotide substitution probabilities.
+- A simplified **methylated ↔ unmethylated** symmetric two-state model.
+- Same-state, change-state, and individual substitution probabilities.
+- Reusable Python functions with numerical and scientific validation.
+- JC69 correction from an observed nucleotide mismatch proportion.
+- **17 automated tests** covering the analysis pipeline and probability models.
+
+For JC69 at an evolutionary distance of `d = 0.10` substitutions per site:
+
+| Outcome | Probability |
+| --- | ---: |
+| Same nucleotide | **90.64%** |
+| Any different nucleotide | **9.36%** |
+| Each particular alternative nucleotide | **3.12%** |
 
 ## Why this project
 
