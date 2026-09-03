@@ -6,6 +6,8 @@
 
 MethylPhylo Studio turns a DNA-methylation beta-value matrix into a transparent exploratory analysis: input validation, locus-level imputation, variance-based feature selection, pairwise sample distances, a rooted UPGMA tree, PCA, and reproducible exports.
 
+**[Open live application](https://sanjeevan-informatik.github.io/methylation-to-phylogenetic-tree/)**
+
 > This is exploratory research software, not a clinical diagnostic tool. A similarity tree based on methylation does not by itself establish cellular ancestry.
 
 ## Why this project
