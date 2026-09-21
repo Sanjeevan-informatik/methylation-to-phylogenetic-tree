@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MethylPhylo research workbench</title><link rel="stylesheet" href="./styles.css"></head><body><main class="workspace"><section class="intro"><div><p class="eyebrow">MethylPhylo Studio 0.3</p><h1>Research workbench</h1><p>Analyse DNA alignments, SNPs, methylation matrices and counts using 17 model/method presets. Export trees, simulations and reproducible comparisons.</p><h2>Run on your computer</h2><pre>git clone https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree.git
+cd methylation-to-phylogenetic-tree
+python -m venv .venv
+# Activate .venv for your operating system
+pip install -e .
+methylphylo-research serve</pre><p>Then open <strong>http://127.0.0.1:8765</strong>. Install IQ-TREE separately for maximum-likelihood models.</p><p>The research interface requires the Python backend. This static website runs the original beta-value explorer.</p><p><a href="https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree/blob/main/docs/research.md">Read the research guide</a> · <a href="./index.html">Open beta-value explorer</a></p></div></section></main></body></html>

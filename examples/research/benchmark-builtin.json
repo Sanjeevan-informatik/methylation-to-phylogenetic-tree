@@ -1,0 +1,73 @@
+{
+  "runs": [
+    {
+      "id": "beta-upgma",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-upgma",
+      "seed": 17
+    },
+    {
+      "id": "beta-nj",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-nj",
+      "seed": 17
+    },
+    {
+      "id": "beta-nj-manhattan",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-nj-manhattan",
+      "seed": 17
+    },
+    {
+      "id": "dna-nj-p",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-p",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-nj-jc69",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-jc69",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-nj-k2p",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-k2p",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-parsimony",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-parsimony",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "binary-nj",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-nj",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    },
+    {
+      "id": "binary-parsimony",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-parsimony",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    }
+  ]
+}

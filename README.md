@@ -1,14 +1,50 @@
 # MethylPhylo Studio
 
 [![CI](https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree/actions/workflows/ci.yml/badge.svg)](https://github.com/Sanjeevan-informatik/methylation-to-phylogenetic-tree/actions/workflows/ci.yml)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-6ee7d8)](LICENSE)
 
-MethylPhylo Studio v0.2 turns a DNA-methylation beta-value matrix into a transparent exploratory analysis: input validation, locus-level imputation, variance-based feature selection, pairwise sample distances, a rooted UPGMA tree, PCA, evolutionary-model probabilities, and reproducible exports.
+**Version 0.3 adds a local research workbench for DNA, SNPs and methylation.** It includes 17 compatible analysis presets, known-tree simulations, site/block bootstrap, and reproducible benchmark manifests. Maximum likelihood runs through IQ-TREE; NJ and heuristic parsimony use Biopython; UPGMA uses sample-weighted cluster averages.
 
-**[Open live application](https://methylphylo-studio.sanjeevanvive.chatgpt.site)** — select **Model probability** to explore the JC69 and two-state models.
+The original browser-only beta-value explorer and `methylphylo` CLI remain available. The new research interface runs locally with Python; it is not executed by the static hosted website.
 
-> This is exploratory research software, not a clinical diagnostic tool. A similarity tree based on methylation does not by itself establish cellular ancestry.
+## Start the research workbench
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+methylphylo-research serve
+```
+
+Open **http://127.0.0.1:8765**. Upload a dataset or load an example, choose a compatible method, inspect the tree, and download a ZIP containing observations and provenance.
+
+| Input | Methods/models |
+|---|---|
+| Aligned DNA FASTA | NJ with p/JC69/K2P distances; heuristic parsimony; ML JC69/HKY/GTR |
+| VCF / VCF.gz | Explicit homozygous or phased SNP conversion; DNA methods; GTR+ASC |
+| Methylation beta CSV/TSV | UPGMA / NJ with Euclidean or Manhattan distances |
+| Methylated/total count TSV | Depth-filtered conversion to beta values; optional explicit binarisation |
+| Binary methylation matrix or FASTA | NJ; heuristic parsimony; symmetric JC2/asymmetric GTR2 ML, with ASC variants |
+
+Install [IQ-TREE](https://iqtree.github.io/doc/Quickstart) separately to enable ML presets. The UI detects it automatically; CLI runs can use `--iqtree /path/to/iqtree2`. Without it, built-in methods still work.
+
+```bash
+# Built-in methods only
+methylphylo-research benchmark examples/research/benchmark-builtin.json --output results/builtin
+
+# Full-sequence versus SNP controls, binary models, and beta baselines; needs IQ-TREE
+methylphylo-research benchmark examples/research/benchmark-all.json --output results/all-models
+
+# Generate data with a known true tree
+methylphylo-research simulate --kind dna --sites 5000 --seed 19 --output results/simulation
+```
+
+**[Read the research guide](docs/research.md)** for every preset, input schemas, command examples, ascertainment assumptions, study design and limitations.
+
+**Scientific interpretation:** methylation similarity does not establish cellular ancestry. SNP filtering changes the observation distribution; ML on variable-only data requires an appropriate correction or an explicitly labelled uncorrected control. Raw likelihoods on different datasets are not comparable evidence of accuracy. Bundled data are synthetic demonstrations, not new biological findings.
+
+## Original browser explorer
+
+[Open hosted beta-value explorer](https://methylphylo-studio.sanjeevanvive.chatgpt.site), or serve the repository with `python -m http.server 8000` and open `/dist/`. The following sections document that original exploratory workflow.
 
 ## Version 0.2 highlights
 

@@ -1,0 +1,150 @@
+{
+  "runs": [
+    {
+      "id": "beta-upgma",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-upgma",
+      "seed": 17
+    },
+    {
+      "id": "beta-nj",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-nj",
+      "seed": 17
+    },
+    {
+      "id": "beta-nj-manhattan",
+      "input": "beta.tsv",
+      "data_type": "beta",
+      "recipe": "beta-nj-manhattan",
+      "seed": 17
+    },
+    {
+      "id": "dna-nj-p",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-p",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-nj-jc69",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-jc69",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-nj-k2p",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-nj-k2p",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-parsimony",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-parsimony",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-ml-jc69",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-ml-jc69",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-ml-hky",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-ml-hky",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-ml-gtr",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-ml-gtr",
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    },
+    {
+      "id": "dna-ml-gtr-asc",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-ml-gtr-asc",
+      "seed": 17,
+      "truth": "dna-truth.nwk",
+      "sites": "variable"
+    },
+    {
+      "id": "binary-nj",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-nj",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    },
+    {
+      "id": "binary-parsimony",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-parsimony",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    },
+    {
+      "id": "binary-ml-jc2",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-ml-jc2",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    },
+    {
+      "id": "binary-ml-gtr2",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-ml-gtr2",
+      "seed": 17,
+      "truth": "binary-truth.nwk"
+    },
+    {
+      "id": "binary-ml-jc2-asc",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-ml-jc2-asc",
+      "seed": 17,
+      "truth": "binary-truth.nwk",
+      "sites": "variable"
+    },
+    {
+      "id": "binary-ml-gtr2-asc",
+      "input": "binary.fasta",
+      "data_type": "binary-fasta",
+      "recipe": "binary-ml-gtr2-asc",
+      "seed": 17,
+      "truth": "binary-truth.nwk",
+      "sites": "variable"
+    },
+    {
+      "id": "snp-ml-uncorrected-control",
+      "input": "dna.fasta",
+      "data_type": "dna",
+      "recipe": "dna-ml-gtr",
+      "sites": "variable",
+      "allow_uncorrected": true,
+      "seed": 17,
+      "truth": "dna-truth.nwk"
+    }
+  ]
+}

@@ -23,6 +23,15 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -e ".[dev]"
       - run: ruff check src tests
+      - name: Install validated IQ-TREE engine
+        shell: bash
+        run: |
+          curl -fL --retry 3 https://github.com/iqtree/iqtree2/releases/download/v2.4.0/iqtree-2.4.0-Linux-intel.tar.gz -o /tmp/iqtree.tar.gz
+          echo "49c58e26f192dd5e0045110cee0af151203dfa0bd79fa03d01fcfc3e44ca2f1b  /tmp/iqtree.tar.gz" | sha256sum --check
+          tar --no-same-owner -xzf /tmp/iqtree.tar.gz -C /tmp
+          echo "/tmp/iqtree-2.4.0-Linux-intel/bin" >> "$GITHUB_PATH"
       - run: pytest
       - run: node --check dist/app.js
+      - run: node --check src/methylphylo/web/app.js
+      - run: methylphylo-research benchmark examples/research/benchmark-all.json --output /tmp/methylphylo-benchmark
 
