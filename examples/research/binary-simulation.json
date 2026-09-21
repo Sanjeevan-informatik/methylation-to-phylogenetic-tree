@@ -1,0 +1,27 @@
+{
+  "kind": "binary",
+  "model": "asymmetric binary CTMC",
+  "sites": 1000,
+  "seed": 8,
+  "missing": 0.0,
+  "error": 0.0,
+  "gain": 1,
+  "loss": 1,
+  "branch_units": "time in specified rate units",
+  "root_distribution": [
+    0.5,
+    0.5
+  ],
+  "rate_matrix": [
+    [
+      -1,
+      1
+    ],
+    [
+      1,
+      -1
+    ]
+  ],
+  "truth": "(('A':0.05,'B':0.05):0.15,('C':0.05,'D':0.05):0.15);",
+  "limitations": "Independent sites, shared topology, stationary root; no recombination, mixtures or selection"
+}
